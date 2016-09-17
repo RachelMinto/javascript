@@ -1,0 +1,61 @@
+<body>
+  <script>
+  function myForEach(array, func) {
+    for (var i = 0; i < array.length; i++) {
+      func(array[i]);
+    }
+  }
+
+  function myFilter(array, func) {
+    var result = [];
+
+    array.forEach(function(value) {
+      if (func(value)) {
+        result.push(value);
+      }
+    });
+
+    return result;
+  }
+
+  function myMap(array, func) {
+    var result = [];
+
+    array.forEach(function(value) {
+      result.push(func(value));
+    })
+
+    return result;
+  }
+
+  function myReduce(array, func) {
+    var value, index;
+
+    if (initial) {
+      value = initial;
+      index = 0;
+    } else {
+      value = array[0];
+      index = 1;
+    }
+    
+    array.slice(index).forEach(function(element) {
+      value = func(value, element);
+    });
+
+    return value;
+  }
+
+  function myOwnEvery(array, func) {
+    for (var i = 0; i < array.length; i++) {
+      if (!func(array[i])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  </script>
+
+</body>

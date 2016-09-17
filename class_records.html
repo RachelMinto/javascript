@@ -1,0 +1,133 @@
+<body>
+  <script>
+    var studentScores = {
+      student1: {
+        id: 123456789,
+        scores: {
+          exams: [90, 95, 100, 80],
+          exercises: [20, 15, 10, 19, 15],
+        },
+      },
+      student2: {
+        id: 123456799,
+        scores: {
+          exams: [50, 70, 90, 100],
+          exercises: [0, 15, 20, 15, 15],
+        },
+      },
+      student3: {
+        id: 123457789,
+        scores: {
+          exams: [88, 87, 88, 89],
+          exercises: [10, 20, 10, 19, 18],
+        },
+      },
+      student4: {
+        id: 112233445,
+        scores: {
+          exams: [100, 100, 100, 100],
+          exercises: [10, 15, 10, 10, 15],
+        },
+      },
+      student5: {
+        id: 112233446,
+        scores: {
+          exams: [50, 80, 60, 90],
+          exercises: [10, 0, 10, 10, 0],
+        },
+      },
+    };
+
+    function generateClassRecordSummary(scores) {
+      var studentGrades = [];
+      var exams = [];
+
+      for (studentRecord in scores) {
+        var studentExams = scores[studentRecord].scores.exams;
+        var studentExamAverage = findExamAverage(studentExams);      
+        var studentExerciseScore = sumValues(scores[studentRecord].scores.exercises);
+
+        var studentFinalScore = findWeightedScore(studentExamAverage, studentExerciseScore);
+        var studentGrade = findGradeLetter(studentFinalScore);
+        studentGrades.push(String(studentFinalScore) + " (" + studentGrade + ")");
+      }
+
+      for (var i = 0; i < 4; i++) {
+        var currentExam = [];
+
+        for (studentRecord in scores) {
+          currentExam.push(scores[studentRecord].scores.exams[i]);
+        }
+
+        function currentExamSummary(currentExam) {
+          var avg = findExamAverage(currentExam);
+          var min = Math.min.apply(null, currentExam);
+          var max = Math.max.apply(null, currentExam);
+
+          return {average: avg, minimum: min, maximum: max};
+        }
+
+        exams.push(currentExamSummary(currentExam));
+      }
+
+      return {studentGrades: studentGrades, exams: exams};      
+    };
+
+    function sumValues(values) {
+      return values.reduce(function(sum, value) {
+        return sum + value;
+      })
+    }
+
+    function findExamAverage(exams) {
+      return (sumValues(exams) / exams.length);
+    }
+
+    function findWeightedScore(examAverage, exerciseScore) {
+      return Math.round((examAverage * .65) + (exerciseScore * .35));
+    }
+
+    function findGradeLetter(gradeAsPercent) {
+      switch (true) {
+        case gradeAsPercent < 60:
+          return 'F' 
+          break;
+        case gradeAsPercent < 69:
+          return 'E' 
+          break;
+        case gradeAsPercent < 77:
+          return 'D' 
+          break;
+        case gradeAsPercent < 85:
+          return 'C' 
+          break;  
+        case gradeAsPercent < 93:
+          return 'B' 
+          break;
+        case gradeAsPercent <= 100:
+          return 'A' 
+          break;   
+        default: 
+          return "Error when finding letter grade."         
+      }
+    }    
+
+    console.log(generateClassRecordSummary(studentScores));
+
+    // returns:
+
+    // {
+    //   studentGrades: [ '87 (B)', '73 (D)', '84 (C)', '86 (B)', '56 (F)' ],
+      
+
+    // exams: [
+    //     { average: 75.6, minimum: 50, maximum: 100 },
+    //     { average: 86.4, minimum: 70, maximum: 100 },
+    //     { average: 87.6, minimum: 60, maximum: 100 },
+    //     { average: 91.8, minimum: 80, maximum: 100 },
+    //   ],
+    // }
+
+  </script>
+</body>
+
