@@ -1,0 +1,22 @@
+<body>
+  <script>
+  function trinaryToDecimal(trinaryNumber) {
+    if (trinaryNumber.match(/[^0-3]/)) { return 0; }
+
+    var exponent = -1;
+    var decimal = trinaryNumber.split('')
+
+    var decimal = decimal.reverse().map(function(digit) {
+      exponent += 1;
+      return digit * 3 ** exponent;
+    });
+
+    return decimal.reduce(function(sum, value) {
+      return sum + value;
+    });
+  }  
+
+  console.log(trinaryToDecimal('112'));
+  console.log(trinaryToDecimal('129as'));
+  </script>
+</body>
