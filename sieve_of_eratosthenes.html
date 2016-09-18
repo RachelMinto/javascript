@@ -1,0 +1,28 @@
+<body>
+  <script>
+    function sieveOfEratosthenes(limit) {
+      var primeNumbers = [];
+
+      for (var i = 2; i <= limit; i++) {
+        primeNumbers.push(i);
+      }
+
+      for (var i = 2; i <= limit; i++) {
+        primeNumbers = markComposites(i);
+      }
+
+      function markComposites(primeNumber) {
+        return primeNumbers.filter(function(number) {
+          if (number === primeNumber || number % primeNumber !== 0) {
+            return true;
+          }
+        });
+      }
+
+      console.log(primeNumbers);
+    }
+
+    sieveOfEratosthenes(1000);
+  </script>
+</body>
+
